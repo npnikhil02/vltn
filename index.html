@@ -19,10 +19,8 @@ body{
   overflow:hidden;
 }
 
-/* 🌙 PAGE LOAD */
-.page-enter{
-  animation:fadeIn 1.2s ease forwards;
-}
+/* PAGE LOAD */
+.page-enter{animation:fadeIn 1.2s ease forwards;}
 @keyframes fadeIn{
   from{opacity:0;transform:scale(.95)}
   to{opacity:1;transform:scale(1)}
@@ -38,21 +36,10 @@ body{
   box-shadow:0 50px 100px rgba(0,0,0,.7);
   transition:1s ease;
 }
-#step1.hide{
-  opacity:0;
-  transform:scale(.94);
-  pointer-events:none;
-}
+#step1.hide{opacity:0;transform:scale(.94);pointer-events:none;}
 
-#step1 h1{
-  font-size:clamp(22px,5vw,27px);
-  font-weight:600;
-}
-#step1 p{
-  margin-top:16px;
-  font-size:15px;
-  opacity:.6;
-}
+#step1 h1{font-size:clamp(22px,5vw,27px);font-weight:600;}
+#step1 p{margin-top:16px;font-size:15px;opacity:.6;}
 #step1 button{
   margin-top:36px;
   padding:18px 56px;
@@ -65,20 +52,13 @@ body{
 
 /* STEP 2 */
 #stepExcited{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
   background:rgba(11,12,16,.8);
-  opacity:0;
-  pointer-events:none;
+  opacity:0; pointer-events:none;
   transition:1s ease;
 }
-#stepExcited.show{
-  opacity:1;
-  pointer-events:auto;
-}
+#stepExcited.show{opacity:1;pointer-events:auto;}
 
 .excited-card{
   background:linear-gradient(160deg,#1b1c22,#14151a);
@@ -108,20 +88,13 @@ body{
 
 /* STEP 3 */
 #step2{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
   background:radial-gradient(circle at top,#ff6b81,#ff4d6d,#b46cff,#0b0c10);
-  opacity:0;
-  pointer-events:none;
+  opacity:0; pointer-events:none;
   transition:1.2s ease;
 }
-#step2.show{
-  opacity:1;
-  pointer-events:auto;
-}
+#step2.show{opacity:1;pointer-events:auto;}
 
 .card{
   width:min(94vw,480px);
@@ -140,35 +113,15 @@ body{
   animation:slowPop 1.2s ease;
 }
 
-.card h2{
-  font-size:26px;
-  font-weight:600;
-}
-.card p{
-  margin-top:16px;
-  font-size:17px;
-}
+.card h2{font-size:26px;font-weight:600;}
+.card p{margin-top:16px;font-size:17px;}
 
 /* BUTTON ROW */
-.actions{
-  margin-top:42px;
-  display:flex;
-  gap:18px;
-}
-
+.actions{margin-top:42px;display:flex;gap:18px;}
 .yes,#no{
-  flex:1;
-  height:54px;
-  border-radius:40px;
-  border:none;
-  font-size:16px;
+  flex:1;height:54px;border-radius:40px;border:none;font-size:16px;
 }
-
-.yes{
-  background:#ff2e63;
-  color:#fff;
-}
-
+.yes{background:#ff2e63;color:#fff;}
 #no{
   background:rgba(255,255,255,.9);
   color:#111;
@@ -191,7 +144,7 @@ body{
   100%{transform:scale(1)}
 }
 
-/* ❤️ HEARTS — FASTER */
+/* HEARTS */
 .heart{
   position:fixed;
   bottom:-20px;
@@ -228,13 +181,15 @@ body{
   <div class="card">
     <h2>Kavita 💖</h2>
     <p>Will you be my Valentine?</p>
-
     <div class="actions">
       <button class="yes" onclick="finalYes()">YES 💘</button>
       <button id="no">NO 🙈</button>
     </div>
   </div>
 </div>
+
+<!-- 🎵 SONG (plays only on YES) -->
+<audio id="loveSong" src="song.mp3" preload="auto"></audio>
 
 <script>
 startBtn.onclick=()=>{
@@ -263,7 +218,12 @@ function setupNo(){
   }
 }
 
+/* ✅ SONG PLAYS ONLY HERE */
 function finalYes(){
+  const song=document.getElementById("loveSong");
+  song.volume=0.5;
+  song.play();
+
   document.body.innerHTML=`
     <div class="card page-enter">
       <h2>You said YES 😍</h2>
@@ -282,7 +242,7 @@ function hearts(){
     h.style.animationDuration=(4+Math.random()*2)+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),7000);
-  },250); /* ❤️ faster spawn */
+  },250);
 }
 </script>
 
