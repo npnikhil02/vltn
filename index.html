@@ -109,30 +109,41 @@ body{
   margin-top:36px;
   display:flex;
   justify-content:space-between;
-  gap:24px;
+  gap:20px;
   position:relative;
 }
 
-.yes{
+.yes,#no{
   padding:16px 44px;
   border-radius:36px;
   border:none;
+  font-size:16px;
+  cursor:pointer;
+  flex:1;
+  max-width:48%;
+}
+
+.yes{
   background:#ff2e63;
   color:#fff;
-  font-size:17px;
-  cursor:pointer;
 }
 
 #no{
-  padding:16px 44px;
-  border-radius:36px;
-  border:none;
-  background:rgba(255,255,255,.8);
+  background:rgba(255,255,255,.85);
   color:#111;
-  font-size:16px;
-  cursor:pointer;
-  position:relative; /* IMPORTANT */
+  position:relative;
   touch-action:manipulation;
+}
+
+/* 📱 MOBILE FIX */
+@media (max-width: 480px){
+  .actions{
+    gap:16px;
+  }
+  .yes,#no{
+    padding:14px 0;
+    font-size:15px;
+  }
 }
 
 /* AFTER YES */
@@ -185,7 +196,7 @@ body{
     <h2>Kavita 💖</h2>
     <p>Will you be my Valentine?</p>
 
-    <div class="actions" id="actions">
+    <div class="actions">
       <button class="yes" id="yesBtn" onclick="finalYes()">YES 💘</button>
       <button id="no">NO 🙈</button>
     </div>
@@ -193,8 +204,6 @@ body{
 </div>
 
 <script>
-let moved=false;
-
 startBtn.onclick=()=>{
   step1.classList.add("hide");
   setTimeout(()=>stepExcited.classList.add("show"),300);
@@ -208,22 +217,15 @@ continueBtn.onclick=()=>{
 
 function setupNo(){
   const no=document.getElementById("no");
-
   const evade=()=>{
-    if(!moved) moved=true;
-
     const radius=60;
-    const angle=Math.random()*Math.PI*2;
-    const x=Math.cos(angle)*radius;
-    const y=Math.sin(angle)*radius;
-
-    no.style.transform=`translate(${x}px, ${y}px)`;
+    const a=Math.random()*Math.PI*2;
+    no.style.transform=`translate(${Math.cos(a)*radius}px, ${Math.sin(a)*radius}px)`;
   };
 
   if(window.matchMedia("(hover:none)").matches){
     no.addEventListener("touchstart",e=>{
-      e.preventDefault();
-      evade();
+      e.preventDefault();evade();
     });
   }else{
     no.addEventListener("mouseenter",evade);
