@@ -19,7 +19,7 @@ body{
   overflow:hidden;
 }
 
-/* ========== STEP 1 ========== */
+/* STEP 1 */
 #step1{
   background:linear-gradient(160deg,#15161c,#0f1015);
   border-radius:26px;
@@ -27,7 +27,6 @@ body{
   padding:clamp(40px,7vw,56px);
   text-align:center;
   box-shadow:0 40px 80px rgba(0,0,0,.65);
-  transition:.35s ease;
 }
 #step1.hide{opacity:0;transform:scale(.96);pointer-events:none;}
 
@@ -41,10 +40,9 @@ body{
   background:#fff;
   color:#0b0c10;
   font-size:16px;
-  cursor:pointer;
 }
 
-/* ========== STEP 2 ========== */
+/* STEP 2 */
 #stepExcited{
   position:fixed;
   inset:0;
@@ -54,17 +52,15 @@ body{
   background:rgba(11,12,16,.75);
   opacity:0;
   pointer-events:none;
-  transition:.35s ease;
 }
 #stepExcited.show{opacity:1;pointer-events:auto;}
 
 .excited-card{
-  background:linear-gradient(160deg,#1b1c22,#14151a);
+  background:#16171d;
   border-radius:26px;
   padding:44px;
   width:min(92vw,420px);
   text-align:center;
-  box-shadow:0 30px 70px rgba(0,0,0,.6);
 }
 
 .excited-card button{
@@ -72,13 +68,12 @@ body{
   padding:16px 56px;
   border-radius:36px;
   border:none;
-  background:linear-gradient(180deg,#ffffff,#f2f2f2);
+  background:#fff;
   color:#0b0c10;
   font-size:16px;
-  cursor:pointer;
 }
 
-/* ========== STEP 3 ========== */
+/* STEP 3 */
 #step2{
   position:fixed;
   inset:0;
@@ -88,7 +83,6 @@ body{
   background:radial-gradient(circle at top,#ff6b81,#ff4d6d,#b46cff,#0b0c10);
   opacity:0;
   pointer-events:none;
-  transition:.45s ease;
 }
 #step2.show{opacity:1;pointer-events:auto;}
 
@@ -99,57 +93,44 @@ body{
   text-align:center;
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(22px);
-  box-shadow:0 50px 100px rgba(0,0,0,.45);
 }
 
-.card p{margin-top:14px;font-size:17px;}
-
-/* BUTTONS */
+/* ✅ BUTTON ROW — FIXED */
 .actions{
   margin-top:36px;
   display:flex;
-  justify-content:space-between;
-  gap:20px;
-  position:relative;
+  gap:16px;
 }
 
-.yes,#no{
-  padding:16px 44px;
+.yes,
+#no{
+  flex:1;
+  height:52px;                /* SAME HEIGHT */
   border-radius:36px;
   border:none;
   font-size:16px;
-  cursor:pointer;
-  flex:1;
-  max-width:48%;
 }
 
+/* YES */
 .yes{
   background:#ff2e63;
   color:#fff;
 }
 
+/* NO — IMPORTANT FIX */
 #no{
-  background:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.9);
   color:#111;
   position:relative;
+  transform:translate(0,0);   /* 🔥 KEY FIX */
+  will-change:transform;
   touch-action:manipulation;
-}
-
-/* 📱 MOBILE FIX */
-@media (max-width: 480px){
-  .actions{
-    gap:16px;
-  }
-  .yes,#no{
-    padding:14px 0;
-    font-size:15px;
-  }
 }
 
 /* AFTER YES */
 .chakedi{
   margin-top:18px;
-  font-size:clamp(38px,9vw,52px);
+  font-size:42px;
   font-weight:700;
   animation:pulse 1.4s infinite;
 }
@@ -197,7 +178,7 @@ body{
     <p>Will you be my Valentine?</p>
 
     <div class="actions">
-      <button class="yes" id="yesBtn" onclick="finalYes()">YES 💘</button>
+      <button class="yes" onclick="finalYes()">YES 💘</button>
       <button id="no">NO 🙈</button>
     </div>
   </div>
@@ -206,7 +187,7 @@ body{
 <script>
 startBtn.onclick=()=>{
   step1.classList.add("hide");
-  setTimeout(()=>stepExcited.classList.add("show"),300);
+  stepExcited.classList.add("show");
 };
 
 continueBtn.onclick=()=>{
@@ -217,18 +198,20 @@ continueBtn.onclick=()=>{
 
 function setupNo(){
   const no=document.getElementById("no");
-  const evade=()=>{
-    const radius=60;
+
+  const move=()=>{
+    const r=50;
     const a=Math.random()*Math.PI*2;
-    no.style.transform=`translate(${Math.cos(a)*radius}px, ${Math.sin(a)*radius}px)`;
+    no.style.transform=`translate(${Math.cos(a)*r}px, ${Math.sin(a)*r}px)`;
   };
 
   if(window.matchMedia("(hover:none)").matches){
     no.addEventListener("touchstart",e=>{
-      e.preventDefault();evade();
+      e.preventDefault();
+      move();
     });
   }else{
-    no.addEventListener("mouseenter",evade);
+    no.addEventListener("mouseenter",move);
   }
 }
 
@@ -239,19 +222,6 @@ function finalYes(){
       <div class="chakedi">ચકેડી 💫</div>
       <p>Now you are officially my Valentine ❤️</p>
     </div>`;
-  hearts();
-}
-
-function hearts(){
-  setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(4+Math.random()*3)+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),7000);
-  },320);
 }
 </script>
 
