@@ -47,7 +47,6 @@ body{
 #step1 h1{
   font-size:clamp(22px,5vw,27px);
   font-weight:600;
-  letter-spacing:.3px;
 }
 #step1 p{
   margin-top:16px;
@@ -62,7 +61,6 @@ body{
   background:#fff;
   color:#0b0c10;
   font-size:16px;
-  font-weight:500;
 }
 
 /* STEP 2 */
@@ -100,14 +98,12 @@ body{
 .excited-card h2{
   font-size:22px;
   font-weight:600;
-  letter-spacing:.2px;
 }
 .excited-card p{
   margin-top:14px;
   font-size:15px;
   opacity:.65;
 }
-
 .excited-card button{
   margin-top:36px;
   padding:18px 60px;
@@ -116,7 +112,6 @@ body{
   background:#fff;
   color:#0b0c10;
   font-size:16px;
-  font-weight:500;
 }
 
 /* STEP 3 */
@@ -150,12 +145,10 @@ body{
 .card h2{
   font-size:26px;
   font-weight:600;
-  letter-spacing:.3px;
 }
 .card p{
   margin-top:16px;
   font-size:17px;
-  opacity:.95;
 }
 
 /* BUTTON ROW */
@@ -187,7 +180,7 @@ body{
   touch-action:manipulation;
 }
 
-/* FINAL YES */
+/* FINAL */
 .chakedi{
   margin-top:22px;
   font-size:44px;
@@ -218,29 +211,29 @@ body{
 
 <!-- STEP 1 -->
 <div id="step1">
-  <h1>I have something to ask you,<br>Kavita.</h1>
-  <p>Take a moment. This one matters.</p>
-  <button id="startBtn">Continue</button>
+  <h1>I have a question for you,<br>Kavita!</h1>
+  <p>No pressure. Just curiosity.</p>
+  <button id="startBtn">Click here</button>
 </div>
 
 <!-- STEP 2 -->
 <div id="stepExcited">
   <div class="excited-card">
-    <h2>Someone seems curious…</h2>
-    <p>That’s a good sign.</p>
-    <button id="continueBtn">Go on</button>
+    <h2>Ohh… you are excited to answer!! 😄</h2>
+    <p>I like that energy 😉</p>
+    <button id="continueBtn">Continue</button>
   </div>
 </div>
 
 <!-- STEP 3 -->
 <div id="step2">
   <div class="card">
-    <h2>Kavita</h2>
-    <p>Would you like to be my Valentine?</p>
+    <h2>Kavita 💖</h2>
+    <p>Will you be my Valentine?</p>
 
     <div class="actions">
-      <button class="yes" onclick="finalYes()">Yes</button>
-      <button id="no">No</button>
+      <button class="yes" onclick="finalYes()">YES 💘</button>
+      <button id="no">NO 🙈</button>
     </div>
   </div>
 </div>
@@ -275,9 +268,9 @@ function setupNo(){
 function finalYes(){
   document.body.innerHTML=`
     <div class="card page-enter">
-      <h2>You said yes.</h2>
+      <h2>You said YES 😍</h2>
       <div class="chakedi">ચકેડી 💫</div>
-      <p>This just became my favorite answer.</p>
+      <p>Now you are officially my Valentine ❤️</p>
     </div>`;
   hearts();
 }
