@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Question for You</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto;
+  background:#0b0c10;
+  color:#fff;
+  overflow:hidden;
+}
+
+/* ---------- FRONT PAGE ---------- */
+#step1{
+  background:linear-gradient(160deg,#15161c,#0f1015);
+  border-radius:26px;
+  width:min(92vw,440px);
+  padding:clamp(40px,7vw,56px);
+  text-align:center;
+  box-shadow:0 40px 80px rgba(0,0,0,.65);
+}
+
+#step1 h1{
+  font-size:clamp(22px,5vw,26px);
+  font-weight:600;
+}
+
+#step1 p{
+  margin-top:14px;
+  font-size:15px;
+  opacity:.65;
+}
+
+#step1 button{
+  margin-top:30px;
+  padding:14px 44px;
+  border-radius:32px;
+  border:none;
+  background:#fff;
+  color:#0b0c10;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ---------- VALENTINE PAGE ---------- */
+#step2{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top,
+    #ff6b81 0%,
+    #ff4d6d 30%,
+    #b46cff 65%,
+    #0b0c10 100%);
+}
+
+.card{
+  width:min(94vw,480px);
+  padding:clamp(42px,7vw,60px);
+  border-radius:30px;
+  text-align:center;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(22px);
+  box-shadow:0 50px 100px rgba(0,0,0,.45);
+  animation:reveal .6s ease;
+}
+@keyframes reveal{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.card h2{font-size:26px;}
+.card p{margin-top:14px;font-size:17px;}
+
+.actions{
+  margin-top:36px;
+  position:relative;
+  height:120px;
+}
+
+/* YES */
+.yes{
+  padding:16px 48px;
+  border-radius:36px;
+  border:none;
+  background:#ff2e63;
+  color:#fff;
+  font-size:17px;
+  cursor:pointer;
+  box-shadow:0 18px 40px rgba(255,46,99,.55);
+}
+
+/* NO */
+#no{
+  position:absolute;
+  padding:16px 48px;
+  border-radius:36px;
+  border:none;
+  background:rgba(255,255,255,.75);
+  color:#111;
+  font-size:16px;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+/* AFTER YES */
+.chakedi{
+  margin-top:18px;
+  font-size:clamp(38px,9vw,52px);
+  font-weight:700;
+  animation:pulse 1.4s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+  100%{transform:scale(1)}
+}
+
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- FRONT PAGE -->
+<div id="step1">
+  <h1>I have a question for you,<br>Kavita!</h1>
+  <p>No pressure. Just curiosity.</p>
+  <button onclick="openQuestion()">Click here</button>
+</div>
+
+<!-- VALENTINE PAGE -->
+<div id="step2">
+  <div class="card">
+    <h2>Kavita 💖</h2>
+    <p>Will you be my Valentine?</p>
+
+    <div class="actions">
+      <button class="yes" id="yesBtn" onclick="finalYes()">YES 💘</button>
+      <button id="no">NO 🙈</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let baseX=0, baseY=0;
+let lastX=0, lastY=0;
+
+function isMobile(){
+  return window.matchMedia("(hover: none)").matches;
+}
+
+function openQuestion(){
+  step1.style.display="none";
+  step2.style.display="flex";
+
+  const yes=document.getElementById("yesBtn").getBoundingClientRect();
+  const box=document.querySelector(".actions").getBoundingClientRect();
+
+  baseX=yes.left - box.left + yes.width + 32;
+  baseY=yes.top - box.top;
+
+  lastX=baseX;
+  lastY=baseY;
+
+  no.style.left=baseX+"px";
+  no.style.top=baseY+"px";
+
+  if(isMobile()){
+    // 📱 Mobile → move on tap
+    no.addEventListener("touchstart",(e)=>{
+      e.preventDefault();
+      evade();
+    });
+  }else{
+    // 💻 Desktop → move on hover
+    no.addEventListener("mouseenter",evade);
+  }
+}
+
+function evade(){
+  const minJump=48;
+  const maxRadius=78;
+
+  let x,y,dist;
+  do{
+    const angle=Math.random()*Math.PI*2;
+    const radius=minJump+Math.random()*(maxRadius-minJump);
+    x=baseX+Math.cos(angle)*radius;
+    y=baseY+Math.sin(angle)*radius;
+    dist=Math.hypot(x-lastX,y-lastY);
+  }while(dist<minJump);
+
+  lastX=x;
+  lastY=y;
+
+  no.style.left=x+"px";
+  no.style.top=y+"px";
+}
+
+function finalYes(){
+  document.body.innerHTML=`
+    <div class="card">
+      <h2>You said YES 😍</h2>
+      <div class="chakedi">ચકેડી 💫</div>
+      <p>Now you are officially my Valentine ❤️</p>
+    </div>`;
+  hearts();
+}
+
+function hearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(4+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  },320);
+}
+</script>
+
+</body>
+</html>
