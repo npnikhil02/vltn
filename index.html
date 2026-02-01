@@ -161,6 +161,7 @@ body{
 <body class="page-enter">
 
 <div id="app">
+
   <!-- STEP 1 -->
   <div id="step1">
     <h1>I have a question for you,<br>Kavita!</h1>
@@ -188,10 +189,11 @@ body{
       </div>
     </div>
   </div>
+
 </div>
 
-<!-- 🎵 SONG (MUST STAY OUTSIDE #app) -->
-<audio id="loveSong" src="song.mp3" preload="auto"></audio>
+<!-- 🎵 SONG (LOOPS FOREVER) -->
+<audio id="loveSong" src="song.mp3" preload="auto" loop></audio>
 
 <script>
 startBtn.onclick=()=>{
@@ -220,7 +222,7 @@ function setupNo(){
   }
 }
 
-/* ✅ PLAY SONG ON YES */
+/* PLAY SONG ON YES (LOOPING) */
 function finalYes(){
   const song=document.getElementById("loveSong");
   song.volume=0.5;
