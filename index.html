@@ -19,7 +19,7 @@ body{
   overflow:hidden;
 }
 
-/* ---------- STEP 1 : FRONT ---------- */
+/* ========== STEP 1 ========== */
 #step1{
   background:linear-gradient(160deg,#15161c,#0f1015);
   border-radius:26px;
@@ -29,27 +29,13 @@ body{
   box-shadow:0 40px 80px rgba(0,0,0,.65);
   transition:.35s ease;
 }
+#step1.hide{opacity:0;transform:scale(.96);pointer-events:none;}
 
-#step1.hide{
-  opacity:0;
-  transform:scale(.96);
-  pointer-events:none;
-}
-
-#step1 h1{
-  font-size:clamp(22px,5vw,26px);
-  font-weight:600;
-}
-
-#step1 p{
-  margin-top:14px;
-  font-size:15px;
-  opacity:.65;
-}
-
+#step1 h1{font-size:clamp(22px,5vw,26px);font-weight:600;}
+#step1 p{margin-top:14px;font-size:15px;opacity:.65;}
 #step1 button{
   margin-top:30px;
-  padding:16px 48px;
+  padding:16px 52px;
   border-radius:36px;
   border:none;
   background:#fff;
@@ -58,7 +44,7 @@ body{
   cursor:pointer;
 }
 
-/* ---------- STEP 2 : EXCITED POPUP ---------- */
+/* ========== STEP 2 ========== */
 #stepExcited{
   position:fixed;
   inset:0;
@@ -70,70 +56,41 @@ body{
   pointer-events:none;
   transition:.35s ease;
 }
-
-#stepExcited.show{
-  opacity:1;
-  pointer-events:auto;
-}
+#stepExcited.show{opacity:1;pointer-events:auto;}
 
 .excited-card{
   background:linear-gradient(160deg,#1b1c22,#14151a);
-  border-radius:24px;
-  padding:40px;
-  width:min(90vw,420px);
+  border-radius:26px;
+  padding:44px;
+  width:min(92vw,420px);
   text-align:center;
   box-shadow:0 30px 70px rgba(0,0,0,.6);
-  animation:pop .4s ease;
-}
-
-.excited-card h2{
-  font-size:22px;
-  font-weight:600;
-}
-
-.excited-card p{
-  margin-top:12px;
-  font-size:15px;
-  opacity:.7;
 }
 
 .excited-card button{
-  margin-top:26px;
-  padding:14px 42px;
-  border-radius:32px;
+  margin-top:32px;
+  padding:16px 56px;
+  border-radius:36px;
   border:none;
-  background:#fff;
-  color:#111;
+  background:linear-gradient(180deg,#ffffff,#f2f2f2);
+  color:#0b0c10;
   font-size:16px;
   cursor:pointer;
 }
 
-@keyframes pop{
-  from{transform:scale(.9);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-/* ---------- STEP 3 : VALENTINE ---------- */
+/* ========== STEP 3 ========== */
 #step2{
   position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:radial-gradient(circle at top,
-    #ff6b81 0%,
-    #ff4d6d 30%,
-    #b46cff 65%,
-    #0b0c10 100%);
+  background:radial-gradient(circle at top,#ff6b81,#ff4d6d,#b46cff,#0b0c10);
   opacity:0;
   pointer-events:none;
   transition:.45s ease;
 }
-
-#step2.show{
-  opacity:1;
-  pointer-events:auto;
-}
+#step2.show{opacity:1;pointer-events:auto;}
 
 .card{
   width:min(94vw,480px);
@@ -143,51 +100,48 @@ body{
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(22px);
   box-shadow:0 50px 100px rgba(0,0,0,.45);
-  animation:pop .5s ease;
 }
 
-.card h2{font-size:26px;}
 .card p{margin-top:14px;font-size:17px;}
 
+/* BUTTONS */
 .actions{
   margin-top:36px;
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
   position:relative;
-  height:120px;
 }
 
-/* YES */
 .yes{
-  padding:16px 48px;
+  padding:16px 44px;
   border-radius:36px;
   border:none;
   background:#ff2e63;
   color:#fff;
   font-size:17px;
   cursor:pointer;
-  box-shadow:0 18px 40px rgba(255,46,99,.55);
 }
 
-/* NO */
 #no{
-  position:absolute;
-  padding:16px 48px;
+  padding:16px 44px;
   border-radius:36px;
   border:none;
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.8);
   color:#111;
   font-size:16px;
   cursor:pointer;
+  position:relative; /* IMPORTANT */
   touch-action:manipulation;
 }
 
-/* ---------- AFTER YES ---------- */
+/* AFTER YES */
 .chakedi{
   margin-top:18px;
   font-size:clamp(38px,9vw,52px);
   font-weight:700;
   animation:pulse 1.4s infinite;
 }
-
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.12)}
@@ -200,7 +154,6 @@ body{
   font-size:22px;
   animation:float 6s linear infinite;
 }
-
 @keyframes float{
   from{transform:translateY(0);opacity:1}
   to{transform:translateY(-120vh);opacity:0}
@@ -232,7 +185,7 @@ body{
     <h2>Kavita 💖</h2>
     <p>Will you be my Valentine?</p>
 
-    <div class="actions">
+    <div class="actions" id="actions">
       <button class="yes" id="yesBtn" onclick="finalYes()">YES 💘</button>
       <button id="no">NO 🙈</button>
     </div>
@@ -240,7 +193,7 @@ body{
 </div>
 
 <script>
-let baseX=0, baseY=0, lastX=0, lastY=0;
+let moved=false;
 
 startBtn.onclick=()=>{
   step1.classList.add("hide");
@@ -254,15 +207,18 @@ continueBtn.onclick=()=>{
 };
 
 function setupNo(){
-  const yes=yesBtn.getBoundingClientRect();
-  const box=document.querySelector(".actions").getBoundingClientRect();
+  const no=document.getElementById("no");
 
-  baseX=yes.left-box.left+yes.width+32;
-  baseY=yes.top-box.top;
-  lastX=baseX; lastY=baseY;
+  const evade=()=>{
+    if(!moved) moved=true;
 
-  no.style.left=baseX+"px";
-  no.style.top=baseY+"px";
+    const radius=60;
+    const angle=Math.random()*Math.PI*2;
+    const x=Math.cos(angle)*radius;
+    const y=Math.sin(angle)*radius;
+
+    no.style.transform=`translate(${x}px, ${y}px)`;
+  };
 
   if(window.matchMedia("(hover:none)").matches){
     no.addEventListener("touchstart",e=>{
@@ -272,22 +228,6 @@ function setupNo(){
   }else{
     no.addEventListener("mouseenter",evade);
   }
-}
-
-function evade(){
-  const minJump=48, maxRadius=78;
-  let x,y,d;
-  do{
-    const a=Math.random()*Math.PI*2;
-    const r=minJump+Math.random()*(maxRadius-minJump);
-    x=baseX+Math.cos(a)*r;
-    y=baseY+Math.sin(a)*r;
-    d=Math.hypot(x-lastX,y-lastY);
-  }while(d<minJump);
-
-  lastX=x; lastY=y;
-  no.style.left=x+"px";
-  no.style.top=y+"px";
 }
 
 function finalYes(){
