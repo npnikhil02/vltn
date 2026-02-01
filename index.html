@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Question for You</title>
-  
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 
@@ -160,35 +160,37 @@ body{
 
 <body class="page-enter">
 
-<!-- STEP 1 -->
-<div id="step1">
-  <h1>I have a question for you,<br>Kavita!</h1>
-  <p>No pressure. Just curiosity.</p>
-  <button id="startBtn">Click here</button>
-</div>
-
-<!-- STEP 2 -->
-<div id="stepExcited">
-  <div class="excited-card">
-    <h2>Ohh… you are excited to answer!! 😄</h2>
-    <p>I like that energy 😉</p>
-    <button id="continueBtn">Continue</button>
+<div id="app">
+  <!-- STEP 1 -->
+  <div id="step1">
+    <h1>I have a question for you,<br>Kavita!</h1>
+    <p>No pressure. Just curiosity.</p>
+    <button id="startBtn">Click here</button>
   </div>
-</div>
 
-<!-- STEP 3 -->
-<div id="step2">
-  <div class="card">
-    <h2>Kavita 💖</h2>
-    <p>Will you be my Valentine?</p>
-    <div class="actions">
-      <button class="yes" onclick="finalYes()">YES 💘</button>
-      <button id="no">NO 🙈</button>
+  <!-- STEP 2 -->
+  <div id="stepExcited">
+    <div class="excited-card">
+      <h2>Ohh… you are excited to answer!! 😄</h2>
+      <p>I like that energy 😉</p>
+      <button id="continueBtn">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step2">
+    <div class="card">
+      <h2>Kavita 💖</h2>
+      <p>Will you be my Valentine?</p>
+      <div class="actions">
+        <button class="yes" onclick="finalYes()">YES 💘</button>
+        <button id="no">NO 🙈</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 🎵 SONG (plays only on YES) -->
+<!-- 🎵 SONG (MUST STAY OUTSIDE #app) -->
 <audio id="loveSong" src="song.mp3" preload="auto"></audio>
 
 <script>
@@ -218,13 +220,13 @@ function setupNo(){
   }
 }
 
-/* ✅ SONG PLAYS ONLY HERE */
+/* ✅ PLAY SONG ON YES */
 function finalYes(){
   const song=document.getElementById("loveSong");
   song.volume=0.5;
   song.play();
 
-  document.body.innerHTML=`
+  document.getElementById("app").innerHTML=`
     <div class="card page-enter">
       <h2>You said YES 😍</h2>
       <div class="chakedi">ચકેડી 💫</div>
