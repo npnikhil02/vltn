@@ -19,6 +19,15 @@ body{
   overflow:hidden;
 }
 
+/* 🌟 PAGE LOAD ANIMATION */
+.page-enter{
+  animation:fadeIn .8s ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.96)}
+  to{opacity:1;transform:scale(1)}
+}
+
 /* STEP 1 */
 #step1{
   background:linear-gradient(160deg,#15161c,#0f1015);
@@ -52,6 +61,7 @@ body{
   background:rgba(11,12,16,.75);
   opacity:0;
   pointer-events:none;
+  transition:.4s ease;
 }
 #stepExcited.show{opacity:1;pointer-events:auto;}
 
@@ -61,6 +71,11 @@ body{
   padding:44px;
   width:min(92vw,420px);
   text-align:center;
+  animation:pop .45s ease;
+}
+@keyframes pop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 .excited-card button{
@@ -83,6 +98,7 @@ body{
   background:radial-gradient(circle at top,#ff6b81,#ff4d6d,#b46cff,#0b0c10);
   opacity:0;
   pointer-events:none;
+  transition:.5s ease;
 }
 #step2.show{opacity:1;pointer-events:auto;}
 
@@ -93,36 +109,34 @@ body{
   text-align:center;
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(22px);
+  animation:pop .5s ease;
 }
 
-/* ✅ BUTTON ROW — FIXED */
+/* BUTTON ROW */
 .actions{
   margin-top:36px;
   display:flex;
   gap:16px;
 }
 
-.yes,
-#no{
+.yes,#no{
   flex:1;
-  height:52px;                /* SAME HEIGHT */
+  height:52px;
   border-radius:36px;
   border:none;
   font-size:16px;
 }
 
-/* YES */
 .yes{
   background:#ff2e63;
   color:#fff;
 }
 
-/* NO — IMPORTANT FIX */
 #no{
   background:rgba(255,255,255,.9);
   color:#111;
   position:relative;
-  transform:translate(0,0);   /* 🔥 KEY FIX */
+  transform:translate(0,0);
   will-change:transform;
   touch-action:manipulation;
 }
@@ -139,21 +153,10 @@ body{
   50%{transform:scale(1.12)}
   100%{transform:scale(1)}
 }
-
-.heart{
-  position:fixed;
-  bottom:-20px;
-  font-size:22px;
-  animation:float 6s linear infinite;
-}
-@keyframes float{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120vh);opacity:0}
-}
 </style>
 </head>
 
-<body>
+<body class="page-enter">
 
 <!-- STEP 1 -->
 <div id="step1">
@@ -187,7 +190,7 @@ body{
 <script>
 startBtn.onclick=()=>{
   step1.classList.add("hide");
-  stepExcited.classList.add("show");
+  setTimeout(()=>stepExcited.classList.add("show"),300);
 };
 
 continueBtn.onclick=()=>{
@@ -200,9 +203,12 @@ function setupNo(){
   const no=document.getElementById("no");
 
   const move=()=>{
-    const r=50;
+    // 📱 mobile moves FARTHER, 💻 desktop moderate
+    const isMobile=window.matchMedia("(hover:none)").matches;
+    const radius=isMobile ? 80 : 55;
+
     const a=Math.random()*Math.PI*2;
-    no.style.transform=`translate(${Math.cos(a)*r}px, ${Math.sin(a)*r}px)`;
+    no.style.transform=`translate(${Math.cos(a)*radius}px, ${Math.sin(a)*radius}px)`;
   };
 
   if(window.matchMedia("(hover:none)").matches){
@@ -217,7 +223,7 @@ function setupNo(){
 
 function finalYes(){
   document.body.innerHTML=`
-    <div class="card">
+    <div class="card page-enter">
       <h2>You said YES 😍</h2>
       <div class="chakedi">ચકેડી 💫</div>
       <p>Now you are officially my Valentine ❤️</p>
